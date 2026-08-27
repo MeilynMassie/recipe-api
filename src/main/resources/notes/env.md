@@ -1,0 +1,11 @@
+### VARS - .ENV TEMPLATE
+
+---
+
+DB_TABLE=
+
+DB_USERNAME=
+
+DB_PASSWORD=
+
+DB_URL=

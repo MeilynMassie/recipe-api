@@ -1,0 +1,9 @@
+POST /recipes — manually create a recipe
+GET /recipes — get user's recipes
+GET /recipes/{id} — get one recipe
+PUT /recipes/{id} — edit a recipe
+DELETE /recipes/{id} — delete a recipe
+
+
+POST /recipes/extract — send an image to the Python AI service and return the extracted recipe for review
+POST /recipes — save the confirmed/edited recipe
