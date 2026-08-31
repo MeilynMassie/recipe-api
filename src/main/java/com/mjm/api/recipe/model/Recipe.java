@@ -24,7 +24,7 @@ public class Recipe {
 
     private String name;
 
-    private String description;
+    // private String description;
 
     private Integer prep_time;
 

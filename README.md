@@ -23,6 +23,8 @@ AI Service: recipe-ai-service
   - Favorites
   - Image storage
   - Advanced error handling
+  - Unit conversion calculator
+  - Popular subsititions for ingredients missing
 
 - **Languages/Tools Used:**
   - Java

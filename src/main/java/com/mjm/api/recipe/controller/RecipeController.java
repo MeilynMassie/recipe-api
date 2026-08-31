@@ -1,8 +1,8 @@
 package com.mjm.api.recipe.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mjm.api.recipe.model.Recipe;
@@ -17,8 +17,8 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @GetMapping
-    public Recipe getRecipe(@RequestParam Long chefId) {
+    @GetMapping("/{chefId}")
+    public Recipe getRecipe(@PathVariable Long chefId) {
         return recipeService.getRecipe(chefId);
     }
 }

@@ -26,6 +26,8 @@ public class Ingredient {
 
     private String name;
 
+    private String section;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "recipe_id", nullable = false)

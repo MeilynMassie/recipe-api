@@ -35,6 +35,7 @@ CREATE TABLE ingredient (
     quantity VARCHAR(50),
     unit VARCHAR(50),
     name VARCHAR(255) NOT NULL,
+    section VARCHAR(50),
 
     CONSTRAINT fk_ingredient_recipe
         FOREIGN KEY (recipe_id)
