@@ -8,5 +8,5 @@ import com.mjm.api.recipe.model.Chef;
 
 
 public interface ChefRepository extends JpaRepository<Chef, Long> {
-    Optional<Chef> findByUsername(String username);
+    Optional<Chef> findByUsernameIgnoreCase(String username);
 }
