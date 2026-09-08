@@ -1,0 +1,59 @@
+{
+  "name": "",
+  "prep_time": "ten minutes",
+  "cook_time": null,
+  "servings": "-2",
+
+  "ingredients": [
+    {
+      "quantity": "",
+      "unit": "",
+      "name": "",
+      "section": "Sauce"
+    },
+    {
+      "quantity": "-1",
+      "unit": "cups",
+      "name": "milk",
+      "section": null
+    },
+    {
+      "quantity": "abc",
+      "unit": "tablespoons",
+      "name": "flour",
+      "section": "Sauce"
+    },
+    {
+      "quantity": "1",
+      "unit": "cup",
+      "name": "milk",
+      "section": "Sauce"
+    },
+    {
+      "quantity": "1",
+      "unit": "cup",
+      "name": "milk",
+      "section": "Filling"
+    }
+  ],
+
+  "instructions": [
+    {
+      "step_number": 3,
+      "description": ""
+    },
+    {
+      "step_number": -1,
+      "description": "Bake for 20 minutes."
+    },
+    {
+      "step_number": 1,
+      "description": "Mix ingredients."
+    }
+  ],
+
+  "source": {
+    "publisher": "",
+    "url": "not-a-url"
+  }
+}

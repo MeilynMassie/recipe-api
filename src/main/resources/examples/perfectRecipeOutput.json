@@ -1,0 +1,152 @@
+{
+  "name": "White Chicken Enchiladas",
+  "prep_time": "10 minutes",
+  "cook_time": "25 minutes",
+  "servings": "6",
+  "ingredients": [
+    {
+      "quantity": "1/4",
+      "unit": "cup",
+      "name": "butter",
+      "section": "White Enchilada Sauce"
+    },
+    {
+      "quantity": "1/4",
+      "unit": "cup",
+      "name": "flour",
+      "section": "White Enchilada Sauce"
+    },
+    {
+      "quantity": "3",
+      "unit": "cups",
+      "name": "chicken broth",
+      "section": "White Enchilada Sauce"
+    },
+    {
+      "quantity": "4",
+      "unit": "ounces",
+      "name": "diced green chilies",
+      "section": "White Enchilada Sauce"
+    },
+    {
+      "quantity": "1",
+      "unit": "cup",
+      "name": "sour cream",
+      "section": "White Enchilada Sauce"
+    },
+    {
+      "quantity": "1/2",
+      "unit": "cup",
+      "name": "Monterey Jack cheese",
+      "section": "White Enchilada Sauce"
+    },
+    {
+      "quantity": "2",
+      "unit": "cups",
+      "name": "cooked chicken breast",
+      "section": "Filling"
+    },
+    {
+      "quantity": "6",
+      "unit": "ounces",
+      "name": "cream cheese",
+      "section": "Filling"
+    },
+    {
+      "quantity": "1/2",
+      "unit": "cup",
+      "name": "sour cream",
+      "section": "Filling"
+    },
+    {
+      "quantity": "4",
+      "unit": "ounces",
+      "name": "diced green chilies",
+      "section": "Filling"
+    },
+    {
+      "quantity": "1",
+      "unit": "teaspoon",
+      "name": "cumin",
+      "section": "Filling"
+    },
+    {
+      "quantity": "1 1/2",
+      "unit": "cups",
+      "name": "Monterey Jack cheese",
+      "section": "Filling"
+    },
+    {
+      "quantity": "10",
+      "unit": "8-inch",
+      "name": "flour tortillas",
+      "section": "Topping"
+    },
+    {
+      "quantity": "2",
+      "unit": "cups",
+      "name": "Monterey Jack cheese",
+      "section": "Topping"
+    },
+    {
+      "quantity": null,
+      "unit": null,
+      "name": "cilantro",
+      "section": "Topping"
+    }
+  ],
+  "instructions": [
+    {
+      "step_number": 1,
+      "description": "Melt the butter in a saucepan over medium-high heat."
+    },
+    {
+      "step_number": 2,
+      "description": "Whisk in the flour and cook for 1 minute."
+    },
+    {
+      "step_number": 3,
+      "description": "Gradually whisk in the chicken broth until smooth."
+    },
+    {
+      "step_number": 4,
+      "description": "Stir in the green chilies and simmer until the sauce thickens."
+    },
+    {
+      "step_number": 5,
+      "description": "Remove from heat and stir in the sour cream and Monterey Jack cheese."
+    },
+    {
+      "step_number": 6,
+      "description": "Combine the chicken, cream cheese, sour cream, green chilies, cumin, and cheese for the filling."
+    },
+    {
+      "step_number": 7,
+      "description": "Place filling onto each tortilla and roll tightly."
+    },
+    {
+      "step_number": 8,
+      "description": "Arrange the enchiladas seam-side down in a baking dish."
+    },
+    {
+      "step_number": 9,
+      "description": "Pour the enchilada sauce evenly over the tortillas."
+    },
+    {
+      "step_number": 10,
+      "description": "Top with the remaining Monterey Jack cheese."
+    },
+    {
+      "step_number": 11,
+      "description": "Bake until the cheese is melted and the enchiladas are heated through."
+    },
+    {
+      "step_number": 12,
+      "description": "Garnish with cilantro and serve."
+    }
+  ],
+  "source": {
+    "publisher": "The Recipe Critic",
+    "url": "https://therecipecritic.com/white-chicken-enchiladas-recipe/"
+  }
+}
