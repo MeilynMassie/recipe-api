@@ -3,6 +3,7 @@ package com.mjm.api.recipe.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -48,18 +49,20 @@ public class ChefController {
     }
 
     @PostMapping
-    public void createChef(@Valid @RequestBody Chef chef) {
+    public ResponseEntity<Void> createChef(@Valid @RequestBody Chef chef) {
         chefService.createChef(chef);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{id}")
-    public void deleteChef(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteChef(@PathVariable Long id) {
         chefService.deleteChef(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}")
-    public String updateChefDetails(@PathVariable Long id, @RequestBody UpdateChefRequest chef) {
+    public ResponseEntity<Void> updateChefDetails(@PathVariable Long id, @RequestBody UpdateChefRequest chef) {
         chefService.updateChefDetails(id, chef);
-        return "Chef updated successfully";
+        return ResponseEntity.noContent().build();
     }
 }

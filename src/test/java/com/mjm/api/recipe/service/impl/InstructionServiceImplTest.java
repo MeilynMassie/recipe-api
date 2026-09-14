@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.mjm.api.recipe.exception.InvalidRequestException;
 import com.mjm.api.recipe.exception.ResourceNotFoundException;
 import com.mjm.api.recipe.model.Instruction;
 import com.mjm.api.recipe.model.Recipe;
@@ -37,9 +38,13 @@ class InstructionServiceImplTest {
 
     @Test
     void getInstructionsReturnsInstructionsWhenFound() {
+        Recipe recipe = new Recipe();
+        ReflectionTestUtils.setField(recipe, "id", 5L);
+
         Instruction instruction = new Instruction();
         ReflectionTestUtils.setField(instruction, "id", 1L);
 
+        when(recipeRepository.findById(5L)).thenReturn(Optional.of(recipe));
         when(instructionRepository.findByRecipeId(5L)).thenReturn(List.of(instruction));
 
         List<Instruction> result = instructionService.getInstructions(5L);
@@ -48,8 +53,21 @@ class InstructionServiceImplTest {
     }
 
     @Test
-    void getInstructionsThrowsWhenRecipeHasNoInstructions() {
+    void getInstructionsReturnsEmptyListWhenRecipeExistsButHasNoInstructions() {
+        Recipe recipe = new Recipe();
+        ReflectionTestUtils.setField(recipe, "id", 5L);
+
+        when(recipeRepository.findById(5L)).thenReturn(Optional.of(recipe));
         when(instructionRepository.findByRecipeId(5L)).thenReturn(List.of());
+
+        List<Instruction> result = instructionService.getInstructions(5L);
+
+        assertEquals(List.of(), result);
+    }
+
+    @Test
+    void getInstructionsThrowsWhenRecipeDoesNotExist() {
+        when(recipeRepository.findById(5L)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () -> instructionService.getInstructions(5L));
     }
@@ -111,5 +129,17 @@ class InstructionServiceImplTest {
         assertEquals(2, instruction.getStep_number());
         assertEquals("New description", instruction.getDescription());
         verify(instructionRepository).save(instruction);
+    }
+
+    @Test
+    void updateInstructionDetailsThrowsWhenRequestHasNoUpdatableFields() {
+        Instruction instruction = new Instruction();
+        ReflectionTestUtils.setField(instruction, "id", 1L);
+
+        UpdateInstructionRequest request = new UpdateInstructionRequest();
+
+        when(instructionRepository.findByIdAndRecipeId(1L, 5L)).thenReturn(Optional.of(instruction));
+
+        assertThrows(InvalidRequestException.class, () -> instructionService.updateInstructionDetails(1L, 5L, request));
     }
 }

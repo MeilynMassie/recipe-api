@@ -2,6 +2,8 @@ package com.mjm.api.recipe.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -37,18 +39,20 @@ public class RecipeController {
     }
 
     @PostMapping
-    public void createRecipe(@Valid @RequestBody Recipe recipe, @PathVariable Long chefId) {
+    public ResponseEntity<Void> createRecipe(@Valid @RequestBody Recipe recipe, @PathVariable Long chefId) {
         recipeService.createRecipe(recipe, chefId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{recipeId}")
-    public void deleteRecipe(@PathVariable Long recipeId) {
+    public ResponseEntity<Void> deleteRecipe(@PathVariable Long recipeId) {
         recipeService.deleteRecipe(recipeId);
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{recipeId}")
-    public String updateRecipeDetails(@PathVariable Long recipeId, @RequestBody UpdateRecipeRequest recipe) {
+    public ResponseEntity<Void> updateRecipeDetails(@PathVariable Long recipeId, @RequestBody UpdateRecipeRequest recipe) {
         recipeService.updateRecipeDetails(recipeId, recipe);
-        return "Recipe updated successfully";
+        return ResponseEntity.noContent().build();
     }
 }

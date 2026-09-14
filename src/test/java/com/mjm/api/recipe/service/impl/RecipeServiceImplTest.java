@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.mjm.api.recipe.exception.InvalidRequestException;
 import com.mjm.api.recipe.exception.ResourceNotFoundException;
 import com.mjm.api.recipe.model.Chef;
 import com.mjm.api.recipe.model.Ingredient;
@@ -51,9 +52,13 @@ class RecipeServiceImplTest {
 
     @Test
     void getRecipesReturnsRecipesWhenFound() {
+        Chef chef = new Chef();
+        ReflectionTestUtils.setField(chef, "id", 5L);
+
         Recipe recipe = new Recipe();
         ReflectionTestUtils.setField(recipe, "id", 1L);
 
+        when(chefRepository.findById(5L)).thenReturn(Optional.of(chef));
         when(recipeRepository.findByChefId(5L)).thenReturn(List.of(recipe));
 
         List<Recipe> result = recipeService.getRecipes(5L);
@@ -62,8 +67,21 @@ class RecipeServiceImplTest {
     }
 
     @Test
-    void getRecipesThrowsWhenChefHasNoRecipes() {
+    void getRecipesReturnsEmptyListWhenChefExistsButHasNoRecipes() {
+        Chef chef = new Chef();
+        ReflectionTestUtils.setField(chef, "id", 5L);
+
+        when(chefRepository.findById(5L)).thenReturn(Optional.of(chef));
         when(recipeRepository.findByChefId(5L)).thenReturn(List.of());
+
+        List<Recipe> result = recipeService.getRecipes(5L);
+
+        assertEquals(List.of(), result);
+    }
+
+    @Test
+    void getRecipesThrowsWhenChefDoesNotExist() {
+        when(chefRepository.findById(5L)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () -> recipeService.getRecipes(5L));
     }
@@ -132,5 +150,17 @@ class RecipeServiceImplTest {
         when(recipeRepository.findById(999L)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () -> recipeService.getRecipe(999L));
+    }
+
+    @Test
+    void updateRecipeDetailsThrowsWhenRequestHasNoUpdatableFields() {
+        Recipe recipe = new Recipe();
+        ReflectionTestUtils.setField(recipe, "id", 1L);
+
+        UpdateRecipeRequest request = new UpdateRecipeRequest();
+
+        when(recipeRepository.findById(1L)).thenReturn(Optional.of(recipe));
+
+        assertThrows(InvalidRequestException.class, () -> recipeService.updateRecipeDetails(1L, request));
     }
 }

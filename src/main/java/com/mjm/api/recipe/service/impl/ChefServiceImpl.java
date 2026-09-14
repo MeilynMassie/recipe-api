@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.mjm.api.recipe.exception.InvalidRequestException;
 import com.mjm.api.recipe.exception.ResourceNotFoundException;
 import com.mjm.api.recipe.model.Chef;
 import com.mjm.api.recipe.model.ChangeRequest.UpdateChefRequest;
@@ -47,6 +48,11 @@ public class ChefServiceImpl implements ChefService {
     @Override
     public void updateChefDetails(Long id, UpdateChefRequest chefChangeRequest) {
         Chef chef = chefRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Chef", id));
+
+        if (!UpdateRequestValidator.hasAnyChefUpdate(chefChangeRequest)) {
+            throw new InvalidRequestException("PATCH request body must contain at least one valid field to update");
+        }
+
         if (chefChangeRequest.getUsername() != null) {
             chef.setUsername(chefChangeRequest.getUsername());
         }
@@ -56,6 +62,7 @@ public class ChefServiceImpl implements ChefService {
         if (chefChangeRequest.getEmail() != null) {
             chef.setEmail(chefChangeRequest.getEmail());
         }
+
         chefRepository.save(chef);
     }
 }

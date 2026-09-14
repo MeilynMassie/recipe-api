@@ -2,6 +2,8 @@ package com.mjm.api.recipe.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -37,18 +39,20 @@ public class InstructionController {
     }
 
     @PostMapping
-    public void createInstruction(@Valid @RequestBody Instruction instruction, @PathVariable Long recipeId) {
+    public ResponseEntity<Void> createInstruction(@Valid @RequestBody Instruction instruction, @PathVariable Long recipeId) {
         instructionService.createInstruction(instruction, recipeId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{instructionId}")
-    public void deleteInstruction(@PathVariable Long instructionId) {
+    public ResponseEntity<Void> deleteInstruction(@PathVariable Long instructionId) {
         instructionService.deleteInstruction(instructionId);
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{instructionId}")
-    public String updateInstructionDetails(@PathVariable Long instructionId, @PathVariable Long recipeId, @RequestBody UpdateInstructionRequest instruction) {
+    public ResponseEntity<Void> updateInstructionDetails(@PathVariable Long instructionId, @PathVariable Long recipeId, @RequestBody UpdateInstructionRequest instruction) {
         instructionService.updateInstructionDetails(instructionId, recipeId, instruction);
-        return "Instruction updated successfully";
+        return ResponseEntity.noContent().build();
     }
 }

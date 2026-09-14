@@ -1,5 +1,12 @@
 package com.mjm.api.recipe.exception;
 
+import java.time.Instant;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,38 +16,70 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import java.util.Map;
-import java.util.stream.Collectors;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-        @ExceptionHandler(MethodArgumentNotValidException.class)
-        public ResponseEntity<Map<String, String>> handleValidationErrors(
-        MethodArgumentNotValidException ex) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiError> handleValidationErrors(
+            MethodArgumentNotValidException ex,
+            HttpServletRequest request) {
 
         Map<String, String> errors = ex.getBindingResult()
-        .getFieldErrors()
-        .stream()
-        .collect(Collectors.toMap(
-                FieldError::getField,
-                DefaultMessageSourceResolvable::getDefaultMessage,
-                (existing, replacement) -> existing
-        ));
+                .getFieldErrors()
+                .stream()
+                .collect(Collectors.toMap(
+                        FieldError::getField,
+                        DefaultMessageSourceResolvable::getDefaultMessage,
+                        (existing, replacement) -> existing,
+                        LinkedHashMap::new
+                ));
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
-        }
-
+        return buildError(HttpStatus.BAD_REQUEST, "Validation failed", request, errors);
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> handleResourceNotFound(ResourceNotFoundException exception) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    public ResponseEntity<ApiError> handleResourceNotFound(
+            ResourceNotFoundException exception,
+            HttpServletRequest request) {
+        return buildError(HttpStatus.NOT_FOUND, exception.getMessage(), request, null);
     }
+
+    @ExceptionHandler(InvalidRequestException.class)
+    public ResponseEntity<ApiError> handleInvalidRequest(
+            InvalidRequestException exception,
+            HttpServletRequest request) {
+        return buildError(HttpStatus.BAD_REQUEST, exception.getMessage(), request, null);
+    }
+
     @ExceptionHandler(NoResourceFoundException.class)
-    public ResponseEntity<Map<String, String>> handleInvalidEndpoint(
-        NoResourceFoundException ex) {
-                return ResponseEntity
-                        .status(HttpStatus.NOT_FOUND)
-                        .body(Map.of("error", "Invalid endpoint"));
-        }
+    public ResponseEntity<ApiError> handleInvalidEndpoint(
+            NoResourceFoundException ex,
+            HttpServletRequest request) {
+        return buildError(HttpStatus.NOT_FOUND, "Invalid endpoint", request, null);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiError> handleUnexpectedException(
+            Exception ex,
+            HttpServletRequest request) {
+        return buildError(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred", request, null);
+    }
+
+    private ResponseEntity<ApiError> buildError(
+            HttpStatus status,
+            String message,
+            HttpServletRequest request,
+            Map<String, String> details) {
+
+        ApiError apiError = new ApiError(
+                Instant.now(),
+                status.value(),
+                status.getReasonPhrase(),
+                message,
+                request.getRequestURI(),
+                details == null ? Map.of() : details
+        );
+
+        return ResponseEntity.status(status).body(apiError);
+    }
 }

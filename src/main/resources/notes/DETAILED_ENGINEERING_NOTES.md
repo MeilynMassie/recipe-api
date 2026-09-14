@@ -108,25 +108,55 @@ The instruction flow includes:
 - Use of Flyway for schema evolution
 - Good use of Spring Data repositories
 - Partial update DTOs make update operations simpler
+- Standardized `ResponseEntity` success responses across controllers
+- Centralized JSON error handling through `GlobalExceptionHandler`
 - Automated test coverage already exists and is growing
+
+## Response contract now in place
+
+The API now uses a consistent success and error response convention.
+
+### Success responses
+
+- `GET` requests return `200 OK`
+- `POST` requests return `201 Created`
+- `PATCH` requests return `204 No Content`
+- `DELETE` requests return `204 No Content`
+
+### Error responses
+
+Errors are handled centrally through `GlobalExceptionHandler` and return a consistent JSON envelope:
+
+```json
+{
+  "timestamp": "2026-09-14T12:00:00Z",
+  "status": 404,
+  "error": "Not Found",
+  "message": "Recipe not found with id: 123",
+  "path": "/api/v1/recipe/1",
+  "details": {}
+}
+```
+
+Validation errors use the same envelope with field-level details where available.
 
 ## Current concerns and recommended follow-up
 
-### 1. API response consistency
+### 1. Empty collection semantics
 
-Some endpoints return `void`, while others return success messages. This is workable, but for a recruiter-facing or public-facing API it would be cleaner to standardize endpoint response shapes.
+The repository now treats a valid parent resource with no child rows as a normal empty list response rather than a not-found error. This behavior is implemented in the recipe, ingredient, and instruction service methods.
 
-### 2. Empty collection semantics
-
-Some service methods currently treat empty lists as missing resources. In many APIs, an empty list is a valid response for a valid parent resource with no children.
-
-### 3. Ownership validation
+### 2. Ownership validation
 
 Ingredient and instruction updates should consistently validate recipe ownership, not just the target entity id. This is important for preventing accidental cross-recipe edits.
 
-### 4. Validation strategy
+### 3. Validation strategy
 
-Validation is currently applied mostly to create flows and full entities. That aligns well with the design intent of partial update DTOs.
+Validation is intentionally applied to create flows and fully formed payloads. Partial update DTOs remain intentionally non-validating, which aligns with the repository's current design.
+
+### 4. Integration and contract testing
+
+The repo currently has good unit coverage, but additional HTTP-level integration tests would help verify response codes, payloads, and error mapping end-to-end.
 
 ### 5. Security and local configuration
 
@@ -150,11 +180,10 @@ Fresh results:
 
 ## Suggested next steps
 
-1. Standardize response semantics across controllers
-2. Clarify empty-list vs. 404 behavior for nested resources
-3. Add more HTTP-level integration tests
-4. Review API contract and documentation consistency
-5. Harden production configuration and deployment setup later
+1. Clarify empty-list vs. 404 behavior for nested resources
+2. Add more HTTP-level integration tests
+3. Review API contract and documentation consistency
+4. Harden production configuration and deployment setup later
 
 ## Summary
 

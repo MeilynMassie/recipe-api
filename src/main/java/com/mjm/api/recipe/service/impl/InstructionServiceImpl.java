@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.mjm.api.recipe.exception.InvalidRequestException;
 import com.mjm.api.recipe.model.Instruction;
 import com.mjm.api.recipe.model.Recipe;
 import com.mjm.api.recipe.model.ChangeRequest.UpdateInstructionRequest;
@@ -25,12 +26,10 @@ public class InstructionServiceImpl implements InstructionService {
 
     @Override
     public List<Instruction> getInstructions(Long recipeId) {
-        List<Instruction> instructions = instructionRepository.findByRecipeId(recipeId);
+        recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe", recipeId));
 
-        if (instructions.isEmpty()) {
-            throw new ResourceNotFoundException("Instruction not found due to Recipe", recipeId);
-        }
-        return instructions;
+        return instructionRepository.findByRecipeId(recipeId);
     }
 
     @Override
@@ -57,12 +56,18 @@ public class InstructionServiceImpl implements InstructionService {
     public void updateInstructionDetails(Long instructionId, Long recipeId, UpdateInstructionRequest instructionChangeRequest) {
         Instruction instruction = instructionRepository.findByIdAndRecipeId(instructionId, recipeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Instruction not found due to Recipe", recipeId));
+
+        if (!UpdateRequestValidator.hasAnyInstructionUpdate(instructionChangeRequest)) {
+            throw new InvalidRequestException("PATCH request body must contain at least one valid field to update");
+        }
+
         if (instructionChangeRequest.getStep_number() != null) {
             instruction.setStep_number(instructionChangeRequest.getStep_number());
         }
         if (instructionChangeRequest.getDescription() != null) {
             instruction.setDescription(instructionChangeRequest.getDescription());
         }
+
         instructionRepository.save(instruction);
     }
 }

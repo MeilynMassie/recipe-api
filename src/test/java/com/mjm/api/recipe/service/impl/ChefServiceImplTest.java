@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.mjm.api.recipe.exception.InvalidRequestException;
 import com.mjm.api.recipe.exception.ResourceNotFoundException;
 import com.mjm.api.recipe.model.Chef;
 import com.mjm.api.recipe.model.ChangeRequest.UpdateChefRequest;
@@ -121,5 +122,17 @@ class ChefServiceImplTest {
         when(chefRepository.findById(999L)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () -> chefService.getChef(999L));
+    }
+
+    @Test
+    void updateChefDetailsThrowsWhenRequestHasNoUpdatableFields() {
+        Chef chef = new Chef();
+        ReflectionTestUtils.setField(chef, "id", 1L);
+
+        UpdateChefRequest request = new UpdateChefRequest();
+
+        when(chefRepository.findById(1L)).thenReturn(Optional.of(chef));
+
+        assertThrows(InvalidRequestException.class, () -> chefService.updateChefDetails(1L, request));
     }
 }

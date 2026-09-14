@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -70,12 +73,12 @@ class RecipeControllerTest {
     }
 
     @Test
-    void updateRecipeDetailsDelegatesToServiceAndReturnsSuccessMessage() {
+    void updateRecipeDetailsDelegatesToServiceAndReturnsNoContent() {
         UpdateRecipeRequest request = new UpdateRecipeRequest();
 
-        String result = controller.updateRecipeDetails(1L, request);
+        ResponseEntity<Void> result = controller.updateRecipeDetails(1L, request);
 
-        assertEquals("Recipe updated successfully", result);
+        assertEquals(HttpStatus.NO_CONTENT, result.getStatusCode());
         verify(recipeService).updateRecipeDetails(1L, request);
     }
 }

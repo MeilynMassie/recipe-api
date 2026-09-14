@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -87,12 +90,12 @@ class ChefControllerTest {
     }
 
     @Test
-    void updateChefDetailsDelegatesToServiceAndReturnsSuccessMessage() {
+    void updateChefDetailsDelegatesToServiceAndReturnsNoContent() {
         UpdateChefRequest request = new UpdateChefRequest();
 
-        String result = controller.updateChefDetails(1L, request);
+        ResponseEntity<Void> result = controller.updateChefDetails(1L, request);
 
-        assertEquals("Chef updated successfully", result);
+        assertEquals(HttpStatus.NO_CONTENT, result.getStatusCode());
         verify(chefService).updateChefDetails(1L, request);
     }
 }

@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -70,12 +73,12 @@ class InstructionControllerTest {
     }
 
     @Test
-    void updateInstructionDetailsDelegatesToServiceAndReturnsSuccessMessage() {
+    void updateInstructionDetailsDelegatesToServiceAndReturnsNoContent() {
         UpdateInstructionRequest request = new UpdateInstructionRequest();
 
-        String result = controller.updateInstructionDetails(1L, 5L, request);
+        ResponseEntity<Void> result = controller.updateInstructionDetails(1L, 5L, request);
 
-        assertEquals("Instruction updated successfully", result);
+        assertEquals(HttpStatus.NO_CONTENT, result.getStatusCode());
         verify(instructionService).updateInstructionDetails(1L, 5L, request);
     }
 }

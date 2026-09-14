@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.mjm.api.recipe.exception.InvalidRequestException;
 import com.mjm.api.recipe.exception.ResourceNotFoundException;
 import com.mjm.api.recipe.model.Chef;
 import com.mjm.api.recipe.model.Recipe;
@@ -30,13 +31,10 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<Recipe> getRecipes(Long chefId) {
-        List<Recipe> recipes = recipeRepository.findByChefId(chefId);
+        chefRepository.findById(chefId)
+                .orElseThrow(() -> new ResourceNotFoundException("Chef", chefId));
 
-        if (recipes.isEmpty()) {
-            throw new ResourceNotFoundException("Recipe not found due to Chef", chefId);
-        }
-
-        return recipes;
+        return recipeRepository.findByChefId(chefId);
     }
 
     @Override
@@ -64,6 +62,11 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public void updateRecipeDetails(Long recipeId, UpdateRecipeRequest recipeChangeRequest) {
         Recipe recipe = recipeRepository.findById(recipeId).orElseThrow(() -> new ResourceNotFoundException("Recipe", recipeId));
+
+        if (!UpdateRequestValidator.hasAnyRecipeUpdate(recipeChangeRequest)) {
+            throw new InvalidRequestException("PATCH request body must contain at least one valid field to update");
+        }
+
         if (recipeChangeRequest.getName() != null) {
             recipe.setName(recipeChangeRequest.getName());
         }
@@ -76,6 +79,7 @@ public class RecipeServiceImpl implements RecipeService {
         if (recipeChangeRequest.getServings() != null) {
             recipe.setServings(recipeChangeRequest.getServings());
         }
+
         recipeRepository.save(recipe);
     }
 }

@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.mjm.api.recipe.exception.InvalidRequestException;
 import com.mjm.api.recipe.exception.ResourceNotFoundException;
 import com.mjm.api.recipe.model.Ingredient;
 import com.mjm.api.recipe.model.Recipe;
@@ -37,9 +38,13 @@ class IngredientServiceImplTest {
 
     @Test
     void getIngredientsReturnsIngredientsWhenFound() {
+        Recipe recipe = new Recipe();
+        ReflectionTestUtils.setField(recipe, "id", 5L);
+
         Ingredient ingredient = new Ingredient();
         ReflectionTestUtils.setField(ingredient, "id", 1L);
 
+        when(recipeRepository.findById(5L)).thenReturn(Optional.of(recipe));
         when(ingredientRepository.findByRecipeId(5L)).thenReturn(List.of(ingredient));
 
         List<Ingredient> result = ingredientService.getIngredients(5L);
@@ -48,8 +53,21 @@ class IngredientServiceImplTest {
     }
 
     @Test
-    void getIngredientsThrowsWhenRecipeHasNoIngredients() {
+    void getIngredientsReturnsEmptyListWhenRecipeExistsButHasNoIngredients() {
+        Recipe recipe = new Recipe();
+        ReflectionTestUtils.setField(recipe, "id", 5L);
+
+        when(recipeRepository.findById(5L)).thenReturn(Optional.of(recipe));
         when(ingredientRepository.findByRecipeId(5L)).thenReturn(List.of());
+
+        List<Ingredient> result = ingredientService.getIngredients(5L);
+
+        assertEquals(List.of(), result);
+    }
+
+    @Test
+    void getIngredientsThrowsWhenRecipeDoesNotExist() {
+        when(recipeRepository.findById(5L)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () -> ingredientService.getIngredients(5L));
     }
@@ -117,5 +135,17 @@ class IngredientServiceImplTest {
         assertEquals("New flour", ingredient.getName());
         assertEquals("baking", ingredient.getSection());
         verify(ingredientRepository).save(ingredient);
+    }
+
+    @Test
+    void updateIngredientDetailsThrowsWhenRequestHasNoUpdatableFields() {
+        Ingredient ingredient = new Ingredient();
+        ReflectionTestUtils.setField(ingredient, "id", 1L);
+
+        UpdateIngredientRequest request = new UpdateIngredientRequest();
+
+        when(ingredientRepository.findByIdAndRecipeId(1L, 5L)).thenReturn(Optional.of(ingredient));
+
+        assertThrows(InvalidRequestException.class, () -> ingredientService.updateIngredientDetails(1L, 5L, request));
     }
 }

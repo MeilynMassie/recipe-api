@@ -1,6 +1,8 @@
 package com.mjm.api.recipe.controller;
 
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,18 +38,20 @@ public class IngredientController {
     }
 
     @PostMapping
-    public void createIngredient(@Valid @RequestBody Ingredient ingredient, @PathVariable Long recipeId) {
+    public ResponseEntity<Void> createIngredient(@Valid @RequestBody Ingredient ingredient, @PathVariable Long recipeId) {
         ingredientService.createIngredient(ingredient, recipeId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{ingredientId}")
-    public void deleteIngredient(@PathVariable Long ingredientId) {
+    public ResponseEntity<Void> deleteIngredient(@PathVariable Long ingredientId) {
         ingredientService.deleteIngredient(ingredientId);
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{ingredientId}")
-    public String updateIngredientDetails(@PathVariable Long ingredientId, @PathVariable Long recipeId, @RequestBody UpdateIngredientRequest ingredient) {
+    public ResponseEntity<Void> updateIngredientDetails(@PathVariable Long ingredientId, @PathVariable Long recipeId, @RequestBody UpdateIngredientRequest ingredient) {
         ingredientService.updateIngredientDetails(ingredientId, recipeId, ingredient);
-        return "Ingredient updated successfully";
+        return ResponseEntity.noContent().build();
     }
 }

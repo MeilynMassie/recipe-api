@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.mjm.api.recipe.exception.InvalidRequestException;
 import com.mjm.api.recipe.model.Ingredient;
 import com.mjm.api.recipe.model.Recipe;
 import com.mjm.api.recipe.model.ChangeRequest.UpdateIngredientRequest;
@@ -25,12 +26,10 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public List<Ingredient> getIngredients(Long recipeId) {
-        List<Ingredient> ingredients = ingredientRepository.findByRecipeId(recipeId);
+        recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe", recipeId));
 
-        if (ingredients.isEmpty()) {
-            throw new ResourceNotFoundException("Ingredient not found due to Recipe", recipeId);
-        }
-        return ingredients;
+        return ingredientRepository.findByRecipeId(recipeId);
     }
 
     @Override
@@ -57,6 +56,11 @@ public class IngredientServiceImpl implements IngredientService {
     public void updateIngredientDetails(Long ingredientId, Long recipeId, UpdateIngredientRequest ingredientChangeRequest) {
         Ingredient ingredient = ingredientRepository.findByIdAndRecipeId(ingredientId, recipeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Ingredient not found due to Recipe", recipeId));
+
+        if (!UpdateRequestValidator.hasAnyIngredientUpdate(ingredientChangeRequest)) {
+            throw new InvalidRequestException("PATCH request body must contain at least one valid field to update");
+        }
+
         if (ingredientChangeRequest.getQuantity() != null) {
             ingredient.setQuantity(ingredientChangeRequest.getQuantity());
         }
@@ -69,6 +73,7 @@ public class IngredientServiceImpl implements IngredientService {
         if (ingredientChangeRequest.getSection() != null) {
             ingredient.setSection(ingredientChangeRequest.getSection());
         }
+
         ingredientRepository.save(ingredient);
     }
 }
