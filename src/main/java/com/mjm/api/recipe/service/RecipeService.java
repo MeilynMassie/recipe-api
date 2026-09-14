@@ -3,7 +3,7 @@ package com.mjm.api.recipe.service;
 import java.util.List;
 
 import com.mjm.api.recipe.model.Recipe;
-import com.mjm.api.recipe.model.UpdateRecipeRequest;
+import com.mjm.api.recipe.model.ChangeRequest.UpdateRecipeRequest;
 
 public interface RecipeService {
     List<Recipe> getRecipes(Long chefId);

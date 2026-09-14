@@ -4,11 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.mjm.api.recipe.model.Ingredient;
 import com.mjm.api.recipe.model.Instruction;
 import com.mjm.api.recipe.model.Recipe;
-import com.mjm.api.recipe.model.UpdateIngredientRequest;
-import com.mjm.api.recipe.model.UpdateInstructionRequest;
+import com.mjm.api.recipe.model.ChangeRequest.UpdateInstructionRequest;
 import com.mjm.api.recipe.repository.InstructionRepository;
 import com.mjm.api.recipe.repository.RecipeRepository;
 import com.mjm.api.recipe.service.InstructionService;
@@ -20,7 +18,7 @@ public class InstructionServiceImpl implements InstructionService {
     private InstructionRepository instructionRepository;
     private RecipeRepository recipeRepository;
 
-    public InstructionServiceImpl(InstructionRepository instructionRepository) {
+    public InstructionServiceImpl(InstructionRepository instructionRepository, RecipeRepository recipeRepository) {
         this.instructionRepository = instructionRepository;
         this.recipeRepository = recipeRepository;
     }
@@ -35,7 +33,7 @@ public class InstructionServiceImpl implements InstructionService {
         return instructions;
     }
 
-        @Override
+    @Override
     public Instruction getInstruction(Long instructionId, Long recipeId) {
         return instructionRepository.findByIdAndRecipeId(instructionId, recipeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Instruction not found due to Recipe", recipeId));
@@ -50,13 +48,20 @@ public class InstructionServiceImpl implements InstructionService {
 
     @Override
     public void deleteInstruction(Long instructionId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteInstruction'");
+        Instruction instruction = instructionRepository.findById(instructionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Instruction", instructionId));
+        instructionRepository.delete(instruction);
     }
 
     @Override
-    public void updateInstructionDetails(Long instructionId, Long recipeId, UpdateInstructionRequest instruction) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateInstructionDetails'");
+    public void updateInstructionDetails(Long instructionId, Long recipeId, UpdateInstructionRequest instructionChangeRequest) {
+        Instruction instruction = instructionRepository.findById(instructionId).orElseThrow(() -> new ResourceNotFoundException("Instruction", instructionId));
+        if (instructionChangeRequest.getStep_number() != null) {
+            instruction.setStep_number(instructionChangeRequest.getStep_number());
+        }
+        if (instructionChangeRequest.getDescription() != null) {
+            instruction.setDescription(instructionChangeRequest.getDescription());
+        }
+        instructionRepository.save(instruction);
     }
 }

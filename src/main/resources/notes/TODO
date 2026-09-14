@@ -12,4 +12,6 @@ POST /recipes — save the confirmed/edited recipe
 Fix create recipe endpoint
     - It shouldn't need chef_id in JSON if it is in path or vice versa
 
+Add source column in db for recipe
+
 Filter JSON respones to only show what's needed instead of all details

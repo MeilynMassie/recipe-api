@@ -1,6 +1,9 @@
-package com.mjm.api.recipe.model;
+package com.mjm.api.recipe.model.ChangeRequest;
 
 import java.util.List;
+
+import com.mjm.api.recipe.model.Ingredient;
+import com.mjm.api.recipe.model.Instruction;
 
 import lombok.Getter;
 

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 import com.mjm.api.recipe.model.Chef;
-import com.mjm.api.recipe.model.UpdateChefRequest;
+import com.mjm.api.recipe.model.ChangeRequest.UpdateChefRequest;
 import com.mjm.api.recipe.service.ChefService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;

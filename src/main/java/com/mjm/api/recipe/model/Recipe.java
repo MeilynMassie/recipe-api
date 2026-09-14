@@ -2,6 +2,8 @@ package com.mjm.api.recipe.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -24,6 +26,7 @@ public class Recipe {
     private Long id;
 
     @NotNull(message="Chef ID required")
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "chef_id", nullable = false)
     private Chef chef;

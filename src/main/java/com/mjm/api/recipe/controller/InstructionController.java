@@ -2,12 +2,17 @@ package com.mjm.api.recipe.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mjm.api.recipe.model.Instruction;
+import com.mjm.api.recipe.model.ChangeRequest.UpdateInstructionRequest;
 import com.mjm.api.recipe.service.InstructionService;
 
 @RestController
@@ -22,5 +27,26 @@ public class InstructionController {
     @GetMapping
     public List<Instruction> getInstructions(@PathVariable Long recipeId) {
         return instructionService.getInstructions(recipeId);
+    }
+
+    @GetMapping("/{instructionId}")
+    public Instruction getInstruction(@PathVariable Long instructionId, @PathVariable Long recipeId) {
+        return instructionService.getInstruction(instructionId, recipeId);
+    }
+
+    @PostMapping
+    public void createInstruction(@RequestBody Instruction instruction, @PathVariable Long recipeId) {
+        instructionService.createInstruction(instruction, recipeId);
+    }
+
+    @DeleteMapping("/{instructionId}")
+    public void deleteInstruction(@PathVariable Long instructionId) {
+        instructionService.deleteInstruction(instructionId);
+    }
+
+    @PatchMapping("/{instructionId}")
+    public String updateInstructionDetails(@PathVariable Long instructionId, @PathVariable Long recipeId, @RequestBody UpdateInstructionRequest instruction) {
+        instructionService.updateInstructionDetails(instructionId, recipeId, instruction);
+        return "Instruction updated successfully";
     }
 }

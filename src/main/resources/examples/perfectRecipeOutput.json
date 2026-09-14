@@ -1,8 +1,8 @@
 {
   "name": "White Chicken Enchiladas",
-  "prep_time": "10 minutes",
-  "cook_time": "25 minutes",
-  "servings": "6",
+  "prep_time": 10,
+  "cook_time": 25,
+  "servings": 6,
   "ingredients": [
     {
       "quantity": "1/4",
@@ -89,8 +89,8 @@
       "section": "Topping"
     },
     {
-      "quantity": null,
-      "unit": null,
+      "quantity": "A pinch",
+      "unit": "Your heart desire",
       "name": "cilantro",
       "section": "Topping"
     }
@@ -118,7 +118,7 @@
     },
     {
       "step_number": 6,
-      "description": "Combine the chicken, cream cheese, sour cream, green chilies, cumin, and cheese for the filling."
+      "description": "Combine the chicken, cream cheese, sour cream, green chilies, cumin, and Monterey Jack cheese."
     },
     {
       "step_number": 7,
@@ -144,9 +144,5 @@
       "step_number": 12,
       "description": "Garnish with cilantro and serve."
     }
-  ],
-  "source": {
-    "publisher": "The Recipe Critic",
-    "url": "https://therecipecritic.com/white-chicken-enchiladas-recipe/"
-  }
+  ]
 }

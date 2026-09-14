@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.mjm.api.recipe.model.Ingredient;
 import com.mjm.api.recipe.model.Recipe;
-import com.mjm.api.recipe.model.UpdateIngredientRequest;
+import com.mjm.api.recipe.model.ChangeRequest.UpdateIngredientRequest;
 import com.mjm.api.recipe.repository.IngredientRepository;
 import com.mjm.api.recipe.repository.RecipeRepository;
 import com.mjm.api.recipe.service.IngredientService;
@@ -48,13 +48,26 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public void deleteIngredient(Long ingredientId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteIngredient'");
+        Ingredient ingredient = ingredientRepository.findById(ingredientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Ingredient", ingredientId));
+        ingredientRepository.delete(ingredient);
     }
 
     @Override
-    public void updateIngredientDetails(Long ingredientId, Long recipeId, UpdateIngredientRequest ingredient) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateIngredientDetails'");
+    public void updateIngredientDetails(Long ingredientId, Long recipeId, UpdateIngredientRequest ingredientChangeRequest) {
+        Ingredient ingredient = ingredientRepository.findById(ingredientId).orElseThrow(() -> new ResourceNotFoundException("Ingredient", ingredientId));
+        if (ingredientChangeRequest.getQuantity() != null) {
+            ingredient.setQuantity(ingredientChangeRequest.getQuantity());
+        }
+        if (ingredientChangeRequest.getUnit() != null) {
+            ingredient.setUnit(ingredientChangeRequest.getUnit());
+        }
+        if (ingredientChangeRequest.getName() != null) {
+            ingredient.setName(ingredientChangeRequest.getName());
+        }
+        if (ingredientChangeRequest.getSection() != null) {
+            ingredient.setSection(ingredientChangeRequest.getSection());
+        }
+        ingredientRepository.save(ingredient);
     }
 }

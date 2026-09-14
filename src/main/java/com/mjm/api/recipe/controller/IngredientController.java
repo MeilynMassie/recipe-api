@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mjm.api.recipe.model.Ingredient;
-import com.mjm.api.recipe.model.UpdateIngredientRequest;
+import com.mjm.api.recipe.model.ChangeRequest.UpdateIngredientRequest;
 import com.mjm.api.recipe.service.IngredientService;
 
 @RestController
