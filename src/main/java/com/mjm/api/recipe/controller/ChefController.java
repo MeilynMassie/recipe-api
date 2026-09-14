@@ -1,20 +1,24 @@
 package com.mjm.api.recipe.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mjm.api.recipe.model.Chef;
 import com.mjm.api.recipe.model.ChangeRequest.UpdateChefRequest;
 import com.mjm.api.recipe.service.ChefService;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -34,7 +38,7 @@ public class ChefController {
         } else if (username != null) {
             return chefService.getChef(username);
         } else {
-            throw new RuntimeException("Either 'id' or 'username' must be provided");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Either 'id' or 'username' must be provided");
         }
     }
 
@@ -44,7 +48,7 @@ public class ChefController {
     }
 
     @PostMapping
-    public void createChef(@RequestBody Chef chef) {
+    public void createChef(@Valid @RequestBody Chef chef) {
         chefService.createChef(chef);
     }
 

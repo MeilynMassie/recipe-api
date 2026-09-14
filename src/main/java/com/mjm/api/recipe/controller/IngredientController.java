@@ -14,6 +14,8 @@ import com.mjm.api.recipe.model.Ingredient;
 import com.mjm.api.recipe.model.ChangeRequest.UpdateIngredientRequest;
 import com.mjm.api.recipe.service.IngredientService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("${app.api.base-path}/recipe/{recipeId}/ingredient")
 public class IngredientController {
@@ -34,7 +36,7 @@ public class IngredientController {
     }
 
     @PostMapping
-    public void createIngredient(@RequestBody Ingredient ingredient, @PathVariable Long recipeId) {
+    public void createIngredient(@Valid @RequestBody Ingredient ingredient, @PathVariable Long recipeId) {
         ingredientService.createIngredient(ingredient, recipeId);
     }
 

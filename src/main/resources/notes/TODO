@@ -1,17 +1,19 @@
-POST /recipes — manually create a recipe
-GET /recipes — get user's recipes
-GET /recipes/{id} — get one recipe
-PUT /recipes/{id} — edit a recipe
-DELETE /recipes/{id} — delete a recipe
-
-
+- **AI Endpoints:**
 POST /recipes/extract — send an image to the Python AI service and return the extracted recipe for review
 POST /recipes — save the confirmed/edited recipe
 
 
-Fix create recipe endpoint
-    - It shouldn't need chef_id in JSON if it is in path or vice versa
+- **Later Me Problem:**
+  - User accounts & authentication
+  - Recipe search/filtering
+  - Recipe categories/tags
+  - Favorites
+  - Image storage
+  - Advanced error handling
+  - Unit conversion calculator
+  - Popular subsititions for ingredients missing
 
-Add source column in db for recipe
 
-Filter JSON respones to only show what's needed instead of all details
+- **List:**
+- Add source column in db for recipe
+- Filter JSON respones to only show what's needed instead of all details

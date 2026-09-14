@@ -64,8 +64,6 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public void updateRecipeDetails(Long recipeId, UpdateRecipeRequest recipeChangeRequest) {
         Recipe recipe = recipeRepository.findById(recipeId).orElseThrow(() -> new ResourceNotFoundException("Recipe", recipeId));
-        System.out.println("Ingredients: " + recipe.getIngredients());
-        System.out.println("Instructions: " + recipe.getInstructions());
         if (recipeChangeRequest.getName() != null) {
             recipe.setName(recipeChangeRequest.getName());
         }

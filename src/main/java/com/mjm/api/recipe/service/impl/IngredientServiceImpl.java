@@ -55,7 +55,8 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public void updateIngredientDetails(Long ingredientId, Long recipeId, UpdateIngredientRequest ingredientChangeRequest) {
-        Ingredient ingredient = ingredientRepository.findById(ingredientId).orElseThrow(() -> new ResourceNotFoundException("Ingredient", ingredientId));
+        Ingredient ingredient = ingredientRepository.findByIdAndRecipeId(ingredientId, recipeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Ingredient not found due to Recipe", recipeId));
         if (ingredientChangeRequest.getQuantity() != null) {
             ingredient.setQuantity(ingredientChangeRequest.getQuantity());
         }

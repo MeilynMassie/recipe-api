@@ -15,6 +15,8 @@ import com.mjm.api.recipe.model.Recipe;
 import com.mjm.api.recipe.model.ChangeRequest.UpdateRecipeRequest;
 import com.mjm.api.recipe.service.RecipeService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("${app.api.base-path}/recipe/{chefId}")
 public class RecipeController {
@@ -35,7 +37,7 @@ public class RecipeController {
     }
 
     @PostMapping
-    public void createRecipe(@RequestBody Recipe recipe, @PathVariable Long chefId) {
+    public void createRecipe(@Valid @RequestBody Recipe recipe, @PathVariable Long chefId) {
         recipeService.createRecipe(recipe, chefId);
     }
 

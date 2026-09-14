@@ -16,15 +16,6 @@ AI Service: recipe-ai-service
   - Validate recipe data
   - Store recipes in PostgreSQL
 
-- **Later Me Problem:**
-  - User accounts & authentication
-  - Recipe search/filtering
-  - Recipe categories/tags
-  - Favorites
-  - Image storage
-  - Advanced error handling
-  - Unit conversion calculator
-  - Popular subsititions for ingredients missing
 
 - **Languages/Tools Used:**
   - Java

@@ -55,7 +55,8 @@ public class InstructionServiceImpl implements InstructionService {
 
     @Override
     public void updateInstructionDetails(Long instructionId, Long recipeId, UpdateInstructionRequest instructionChangeRequest) {
-        Instruction instruction = instructionRepository.findById(instructionId).orElseThrow(() -> new ResourceNotFoundException("Instruction", instructionId));
+        Instruction instruction = instructionRepository.findByIdAndRecipeId(instructionId, recipeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Instruction not found due to Recipe", recipeId));
         if (instructionChangeRequest.getStep_number() != null) {
             instruction.setStep_number(instructionChangeRequest.getStep_number());
         }

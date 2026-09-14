@@ -15,6 +15,8 @@ import com.mjm.api.recipe.model.Instruction;
 import com.mjm.api.recipe.model.ChangeRequest.UpdateInstructionRequest;
 import com.mjm.api.recipe.service.InstructionService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("${app.api.base-path}/recipe/{recipeId}/instruction")
 public class InstructionController {
@@ -35,7 +37,7 @@ public class InstructionController {
     }
 
     @PostMapping
-    public void createInstruction(@RequestBody Instruction instruction, @PathVariable Long recipeId) {
+    public void createInstruction(@Valid @RequestBody Instruction instruction, @PathVariable Long recipeId) {
         instructionService.createInstruction(instruction, recipeId);
     }
 
