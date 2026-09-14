@@ -8,5 +8,6 @@ import com.mjm.api.recipe.model.Instruction;
 
 public interface InstructionRepository extends JpaRepository<Instruction, Long> {
 
-    Optional<List<Instruction>> findByRecipeId(Long recipeId);
+    List<Instruction> findByRecipeId(Long recipeId);
+    Optional<Instruction> findByIdAndRecipeId(Long instructionId, Long recipeId);
 }

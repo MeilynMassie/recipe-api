@@ -1,5 +1,5 @@
 package com.mjm.api.recipe.repository;
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -7,6 +7,5 @@ import com.mjm.api.recipe.model.Recipe;
 
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
-    Optional<Recipe> findByChefId(Long chefId);
-    
+    List<Recipe> findByChefId(Long chefId);
 }

@@ -7,3 +7,9 @@ DELETE /recipes/{id} — delete a recipe
 
 POST /recipes/extract — send an image to the Python AI service and return the extracted recipe for review
 POST /recipes — save the confirmed/edited recipe
+
+
+Fix create recipe endpoint
+    - It shouldn't need chef_id in JSON if it is in path or vice versa
+
+Filter JSON respones to only show what's needed instead of all details

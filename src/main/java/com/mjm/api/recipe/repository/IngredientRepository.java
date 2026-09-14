@@ -8,6 +8,6 @@ import com.mjm.api.recipe.model.Ingredient;
 
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
 
-    Optional<List<Ingredient>> findByRecipeId(Long recipeId);
-    
+    List<Ingredient> findByRecipeId(Long recipeId);
+    Optional<Ingredient> findByIdAndRecipeId(Long ingredientId, Long recipeId);
 }
