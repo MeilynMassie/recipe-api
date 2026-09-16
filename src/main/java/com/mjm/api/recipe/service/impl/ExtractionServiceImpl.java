@@ -1,13 +1,22 @@
 package com.mjm.api.recipe.service.impl;
 
-import org.springframework.web.client.RestClient;
+import java.util.List;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.client.MultipartBodyBuilder;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.mjm.api.recipe.dto.Extraction.RecipeExtraction;
 import com.mjm.api.recipe.model.Recipe;
 import com.mjm.api.recipe.service.ExtractionService;
 
 public class ExtractionServiceImpl implements  ExtractionService{
 
     private final RestClient restClient;
+    // private final ByteArrayResource byteArrayResource;
 
     public ExtractionServiceImpl(RestClient.Builder builder) {
         this.restClient = builder
@@ -16,51 +25,63 @@ public class ExtractionServiceImpl implements  ExtractionService{
     }
     
     @Override
-    public Recipe extractRecipeFromUrl(String url) {
+    public RecipeExtraction extractRecipeFromUrl(String url) {
         return restClient.post()
                 .uri("/extract/url")
                 .body(new String(url))
                 .retrieve()
-                .body(Recipe.class);
+                .body(RecipeExtraction.class);
     }
+
+    @Override
+    public RecipeExtraction extractRecipeFromImages(List<MultipartFile> images) {
+        MultipartBodyBuilder bodyBuilder = new MultipartBodyBuilder();
+
+        for (MultipartFile image : images) {
+            bodyBuilder.part(
+                    "images",
+                    new MultipartFileResource(image)
+            );
+        }
+
+        MultiValueMap<String, HttpEntity<?>> multipartData =
+                bodyBuilder.build();
+
+        return restClient.post()
+                .uri("/extract")
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .body(multipartData)
+                .retrieve()
+                .body(ExtractionResponse.class);
+    }
+
 }
 
 
 
-// @Service
-// public class ImageService {
 
-//     private final WebClient webClient;
 
-//     public ImageService(WebClient.Builder builder) {
-//         this.webClient = builder.baseUrl("http://fastapi:8000")
-//                 .build();
-//     }
 
-//     public ResponseEntity<String> sendToFastApi(MultipartFile file) {
+//     public ExtractionResponse extract(List<MultipartFile> images) {
 
 //         MultipartBodyBuilder bodyBuilder = new MultipartBodyBuilder();
 
-//         bodyBuilder.part(
-//                 "file",
-//                 new ByteArrayResource(file.getInputStream()) {
-//                     @Override
-//                     public String getFilename() {
-//                         return file.getOriginalFilename();
-//                     }
-//                 });
+//         for (MultipartFile image : images) {
+//             bodyBuilder.part(
+//                     "images",
+//                     new MultipartFileResource(image)
+//             );
+//         }
 
-//         String response = webClient.post()
-//                 .uri("/predict")
+//         MultiValueMap<String, HttpEntity<?>> multipartData =
+//                 bodyBuilder.build();
+
+//         return restClient.post()
+//                 .uri("/extract")
 //                 .contentType(MediaType.MULTIPART_FORM_DATA)
-//                 .body(
-//                     BodyInserters.fromMultipartData(
-//                         bodyBuilder.build()))
+//                 .body(multipartData)
 //                 .retrieve()
-//                 .bodyToMono(String.class)
-//                 .block();
-
-//         return ResponseEntity.ok(response);
+//                 .body(ExtractionResponse.class);
 //     }
 // }
 

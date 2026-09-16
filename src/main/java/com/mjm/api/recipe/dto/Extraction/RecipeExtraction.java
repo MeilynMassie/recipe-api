@@ -10,4 +10,7 @@ public class RecipeExtraction {
     private List<IngredientExtraction> ingredients;
     private List<InstructionExtraction> instructions;
     // private SourceExtraction source;
+    // TODO: Maybe use response to return ok or error so that fast api always returns 
+    // something instead of having to worry about it crashing from invalid input
+    // private String response;
 }
