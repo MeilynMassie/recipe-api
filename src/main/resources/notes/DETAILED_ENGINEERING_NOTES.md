@@ -160,31 +160,4 @@ The repo currently has good unit coverage, but additional HTTP-level integration
 
 ### 5. Security and local configuration
 
-The current project intentionally keeps local development setup lightweight. That is fine for development; however, production security and configuration management would need to be addressed later.
-
-## Current verified verification
-
-The repo was verified with:
-
-```bash
-./mvnw.cmd test
-```
-
-Fresh results:
-
-- 49 tests run
-- 0 failures
-- 0 errors
-- 0 skipped
-- build success
-
-## Suggested next steps
-
-1. Clarify empty-list vs. 404 behavior for nested resources
-2. Add more HTTP-level integration tests
-3. Review API contract and documentation consistency
-4. Harden production configuration and deployment setup later
-
-## Summary
-
-This is a solid Spring Boot API foundation with a clear structure, practical CRUD functionality, and meaningful test coverage. It is already a credible MVP and is positioned well for further growth.
+The current project intentionally keeps local development setup lightweight. That is fine for development; however, production security and configuration management would need to be addressed later

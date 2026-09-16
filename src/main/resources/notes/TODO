@@ -15,5 +15,5 @@ POST /recipes — save the confirmed/edited recipe
 
 
 - **List:**
-- Add source column in db for recipe
+- Add source table in db
 - Filter JSON respones to only show what's needed instead of all details

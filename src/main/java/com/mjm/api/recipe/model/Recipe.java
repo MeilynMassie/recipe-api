@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -25,7 +24,6 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message="Chef ID required")
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "chef_id", nullable = false)
@@ -54,4 +52,6 @@ public class Recipe {
         orphanRemoval = true
     )
     private List<Instruction> instructions;
+
+    // private Source source;
 }

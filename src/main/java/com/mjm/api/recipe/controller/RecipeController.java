@@ -55,4 +55,17 @@ public class RecipeController {
         recipeService.updateRecipeDetails(recipeId, recipe);
         return ResponseEntity.noContent().build();
     }
+
+    // AI Recipe Extraction Endpoints
+    @PostMapping("/extract/url")
+    public Recipe extractRecipeFromUrl(@RequestBody String request) {
+        // return aiRecipeService.extractRecipeFromUrl(request.getUrl());
+        return null;
+    }
+
+    @PostMapping("/extract/image")
+    public Recipe extractRecipeFromImage(@PathVariable String request) {
+        // return aiRecipeService.extractRecipeFromUrl(request.getUrl());
+        return null;
+    }
 }
