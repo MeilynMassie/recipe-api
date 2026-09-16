@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mjm.api.recipe.model.Recipe;
+import com.mjm.api.recipe.dto.RecipeUrlRequest;
 import com.mjm.api.recipe.dto.ChangeRequest.UpdateRecipeRequest;
+import com.mjm.api.recipe.dto.Extraction.RecipeExtraction;
+import com.mjm.api.recipe.service.ExtractionService;
 import com.mjm.api.recipe.service.RecipeService;
 
 import jakarta.validation.Valid;
@@ -26,9 +29,11 @@ import jakarta.validation.Valid;
 @RequestMapping("${app.api.base-path}/recipe/{chefId}")
 public class RecipeController {
     private final RecipeService recipeService;
+    private final ExtractionService extractionService;
 
-    public RecipeController(RecipeService recipeService) {
+    public RecipeController(RecipeService recipeService, ExtractionService extractionService) {
         this.recipeService = recipeService;
+        this.extractionService = extractionService;
     }
 
     @GetMapping
@@ -61,9 +66,8 @@ public class RecipeController {
 
     // AI Recipe Extraction Endpoints
     @PostMapping("/extract/url")
-    public Recipe extractRecipeFromUrl(@RequestBody String request) {
-        // return extractionService.extractRecipeFromUrl(request.getUrl());
-        return null;
+    public RecipeExtraction extractRecipeFromUrl(@RequestBody RecipeUrlRequest request) {
+        return extractionService.extractRecipeFromUrl(request);
     }
 
     @PostMapping(value="/extract/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

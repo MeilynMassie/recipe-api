@@ -2,6 +2,11 @@ package com.mjm.api.recipe.dto.Extraction;
 
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter 
+@Setter 
 public class RecipeExtraction {
     private String name;
     private Integer prep_time;

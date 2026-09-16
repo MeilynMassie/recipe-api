@@ -4,15 +4,19 @@ import java.util.List;
 
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
+import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mjm.api.recipe.dto.RecipeUrlRequest;
 import com.mjm.api.recipe.dto.Extraction.RecipeExtraction;
 import com.mjm.api.recipe.model.Recipe;
 import com.mjm.api.recipe.service.ExtractionService;
 
+@Service 
 public class ExtractionServiceImpl implements  ExtractionService{
 
     private final RestClient restClient;
@@ -20,39 +24,62 @@ public class ExtractionServiceImpl implements  ExtractionService{
 
     public ExtractionServiceImpl(RestClient.Builder builder) {
         this.restClient = builder
-                .baseUrl("http://localhost:8000")
+                .baseUrl("http://127.0.0.1:9000")
                 .build();
     }
     
     @Override
-    public RecipeExtraction extractRecipeFromUrl(String url) {
+    public RecipeExtraction extractRecipeFromUrl(RecipeUrlRequest url) {
         return restClient.post()
                 .uri("/extract/url")
-                .body(new String(url))
+                .body(url)
                 .retrieve()
                 .body(RecipeExtraction.class);
+        // String response = restClient.post()
+        //         .uri("/extract/url")
+        //         .body(url)
+        //         .retrieve()
+        //         .body(String.class);
+
+        // System.out.println("PYTHON RESPONSE:");
+        // System.out.println(response);
+
+        // return response;
     }
+
+//     @Override
+// public RecipeExtraction extractRecipeFromUrl(String url) {
+
+//     RecipeUrlRequest request = new RecipeUrlRequest(url);
+
+//     return restClient.post()
+//             .uri("/extract/url")
+//             .body(request)
+//             .retrieve()
+//             .body(RecipeExtraction.class);
+// }
 
     @Override
     public RecipeExtraction extractRecipeFromImages(List<MultipartFile> images) {
-        MultipartBodyBuilder bodyBuilder = new MultipartBodyBuilder();
+        // MultipartBodyBuilder bodyBuilder = new MultipartBodyBuilder();
 
-        for (MultipartFile image : images) {
-            bodyBuilder.part(
-                    "images",
-                    new MultipartFileResource(image)
-            );
-        }
+        // for (MultipartFile image : images) {
+        //     bodyBuilder.part(
+        //             "images",
+        //             new MultipartFileResource(image)
+        //     );
+        // }
 
-        MultiValueMap<String, HttpEntity<?>> multipartData =
-                bodyBuilder.build();
+        // MultiValueMap<String, HttpEntity<?>> multipartData =
+        //         bodyBuilder.build();
 
-        return restClient.post()
-                .uri("/extract")
-                .contentType(MediaType.MULTIPART_FORM_DATA)
-                .body(multipartData)
-                .retrieve()
-                .body(ExtractionResponse.class);
+        // return restClient.post()
+        //         .uri("/extract/image")
+        //         .contentType(MediaType.MULTIPART_FORM_DATA)
+        //         .body(multipartData)
+        //         .retrieve()
+        //         .body(ExtractionResponse.class);
+        return null;
     }
 
 }
