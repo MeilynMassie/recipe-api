@@ -18,7 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.mjm.api.recipe.model.Ingredient;
-import com.mjm.api.recipe.model.ChangeRequest.UpdateIngredientRequest;
+import com.mjm.api.recipe.dto.ChangeRequest.UpdateIngredientRequest;
 import com.mjm.api.recipe.service.IngredientService;
 
 @ExtendWith(MockitoExtension.class)

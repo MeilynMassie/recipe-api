@@ -22,7 +22,7 @@ import com.mjm.api.recipe.model.Chef;
 import com.mjm.api.recipe.model.Ingredient;
 import com.mjm.api.recipe.model.Instruction;
 import com.mjm.api.recipe.model.Recipe;
-import com.mjm.api.recipe.model.ChangeRequest.UpdateRecipeRequest;
+import com.mjm.api.recipe.dto.ChangeRequest.UpdateRecipeRequest;
 import com.mjm.api.recipe.repository.ChefRepository;
 import com.mjm.api.recipe.repository.RecipeRepository;
 

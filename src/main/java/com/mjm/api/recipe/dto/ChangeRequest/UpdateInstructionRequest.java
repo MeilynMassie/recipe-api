@@ -1,4 +1,4 @@
-package com.mjm.api.recipe.model.ChangeRequest;
+package com.mjm.api.recipe.dto.ChangeRequest;
 
 import lombok.Getter;
 

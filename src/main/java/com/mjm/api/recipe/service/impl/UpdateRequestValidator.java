@@ -1,9 +1,9 @@
 package com.mjm.api.recipe.service.impl;
 
-import com.mjm.api.recipe.model.ChangeRequest.UpdateChefRequest;
-import com.mjm.api.recipe.model.ChangeRequest.UpdateIngredientRequest;
-import com.mjm.api.recipe.model.ChangeRequest.UpdateInstructionRequest;
-import com.mjm.api.recipe.model.ChangeRequest.UpdateRecipeRequest;
+import com.mjm.api.recipe.dto.ChangeRequest.UpdateChefRequest;
+import com.mjm.api.recipe.dto.ChangeRequest.UpdateIngredientRequest;
+import com.mjm.api.recipe.dto.ChangeRequest.UpdateInstructionRequest;
+import com.mjm.api.recipe.dto.ChangeRequest.UpdateRecipeRequest;
 
 final class UpdateRequestValidator {
     private UpdateRequestValidator() {

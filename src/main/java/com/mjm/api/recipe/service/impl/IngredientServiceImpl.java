@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.mjm.api.recipe.exception.InvalidRequestException;
 import com.mjm.api.recipe.model.Ingredient;
 import com.mjm.api.recipe.model.Recipe;
-import com.mjm.api.recipe.model.ChangeRequest.UpdateIngredientRequest;
+import com.mjm.api.recipe.dto.ChangeRequest.UpdateIngredientRequest;
 import com.mjm.api.recipe.repository.IngredientRepository;
 import com.mjm.api.recipe.repository.RecipeRepository;
 import com.mjm.api.recipe.service.IngredientService;

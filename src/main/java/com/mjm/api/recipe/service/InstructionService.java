@@ -3,7 +3,7 @@ package com.mjm.api.recipe.service;
 import java.util.List;
 
 import com.mjm.api.recipe.model.Instruction;
-import com.mjm.api.recipe.model.ChangeRequest.UpdateInstructionRequest;
+import com.mjm.api.recipe.dto.ChangeRequest.UpdateInstructionRequest;
 
 public interface InstructionService {
     List<Instruction> getInstructions(Long recipeId);

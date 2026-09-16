@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.mjm.api.recipe.exception.InvalidRequestException;
 import com.mjm.api.recipe.exception.ResourceNotFoundException;
 import com.mjm.api.recipe.model.Chef;
-import com.mjm.api.recipe.model.ChangeRequest.UpdateChefRequest;
+import com.mjm.api.recipe.dto.ChangeRequest.UpdateChefRequest;
 import com.mjm.api.recipe.repository.ChefRepository;
 import com.mjm.api.recipe.service.ChefService;
 

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mjm.api.recipe.model.Chef;
-import com.mjm.api.recipe.model.ChangeRequest.UpdateChefRequest;
+import com.mjm.api.recipe.dto.ChangeRequest.UpdateChefRequest;
 import com.mjm.api.recipe.service.ChefService;
 
 import jakarta.validation.Valid;

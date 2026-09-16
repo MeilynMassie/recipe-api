@@ -1,4 +1,4 @@
-package com.mjm.api.recipe.model.Extraction;
+package com.mjm.api.recipe.dto.Extraction;
 
 import java.util.List;
 

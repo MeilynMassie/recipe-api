@@ -1,7 +1,7 @@
 package com.mjm.api.recipe.service;
 
 import com.mjm.api.recipe.model.Chef;
-import com.mjm.api.recipe.model.ChangeRequest.UpdateChefRequest;
+import com.mjm.api.recipe.dto.ChangeRequest.UpdateChefRequest;
 
 import java.util.List;
 

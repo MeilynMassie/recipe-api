@@ -3,7 +3,7 @@ package com.mjm.api.recipe.service;
 import java.util.List;
 
 import com.mjm.api.recipe.model.Ingredient;
-import com.mjm.api.recipe.model.ChangeRequest.UpdateIngredientRequest;
+import com.mjm.api.recipe.dto.ChangeRequest.UpdateIngredientRequest;
 
 public interface IngredientService {
     List<Ingredient> getIngredients(Long recipeId);

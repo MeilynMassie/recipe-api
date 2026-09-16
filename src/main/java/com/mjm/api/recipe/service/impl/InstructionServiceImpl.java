@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.mjm.api.recipe.exception.InvalidRequestException;
 import com.mjm.api.recipe.model.Instruction;
 import com.mjm.api.recipe.model.Recipe;
-import com.mjm.api.recipe.model.ChangeRequest.UpdateInstructionRequest;
+import com.mjm.api.recipe.dto.ChangeRequest.UpdateInstructionRequest;
 import com.mjm.api.recipe.repository.InstructionRepository;
 import com.mjm.api.recipe.repository.RecipeRepository;
 import com.mjm.api.recipe.service.InstructionService;

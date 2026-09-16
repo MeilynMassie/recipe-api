@@ -3,6 +3,7 @@ package com.mjm.api.recipe.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mjm.api.recipe.model.Recipe;
-import com.mjm.api.recipe.model.ChangeRequest.UpdateRecipeRequest;
+import com.mjm.api.recipe.dto.ChangeRequest.UpdateRecipeRequest;
 import com.mjm.api.recipe.service.RecipeService;
 
 import jakarta.validation.Valid;
@@ -59,13 +62,13 @@ public class RecipeController {
     // AI Recipe Extraction Endpoints
     @PostMapping("/extract/url")
     public Recipe extractRecipeFromUrl(@RequestBody String request) {
-        // return aiRecipeService.extractRecipeFromUrl(request.getUrl());
+        // return extractionService.extractRecipeFromUrl(request.getUrl());
         return null;
     }
 
-    @PostMapping("/extract/image")
-    public Recipe extractRecipeFromImage(@PathVariable String request) {
-        // return aiRecipeService.extractRecipeFromUrl(request.getUrl());
+    @PostMapping(value="/extract/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Recipe extractRecipeFromImage(@RequestParam("files") List<MultipartFile> files) {
+        // return extractionService.extractRecipeFromImage(files);
         return null;
     }
 }
