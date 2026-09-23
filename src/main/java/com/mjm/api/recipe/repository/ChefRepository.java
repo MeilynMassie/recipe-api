@@ -9,4 +9,6 @@ import com.mjm.api.recipe.model.Chef;
 
 public interface ChefRepository extends JpaRepository<Chef, Long> {
     Optional<Chef> findByUsernameIgnoreCase(String username);
+    Optional<Chef> findByEmailIgnoreCase(String email);
+    Optional<Chef> findByEmailOrUsernameIgnoreCase(String email, String username);
 }

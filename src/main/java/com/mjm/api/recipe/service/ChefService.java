@@ -12,4 +12,5 @@ public interface ChefService {
     void createChef(Chef chef);
     void deleteChef(Long id);
     void updateChefDetails(Long id, UpdateChefRequest chef);
+    Chef getChefByLogin(String login);
 }

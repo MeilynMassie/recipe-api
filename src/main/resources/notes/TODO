@@ -12,8 +12,21 @@ POST /recipes — save the confirmed/edited recipe
   - Advanced error handling
   - Unit conversion calculator
   - Popular subsititions for ingredients missing
+  - Add a social networking for sharing recipes, more similiar to Pintrest than Yelp
+    - Helps keep it simple and clean
 
 
 - **List:**
 - Add source table in db
 - Filter JSON respones to only show what's needed instead of all details
+- Add security 
+  - Step 1  → Add Spring Security
+  - Step 2  → Password hashing
+  - Step 3  → ChefDetailsService
+  - Step 4  → Security configuration
+  - Step 5  → Registration
+  - Step 6  → Login
+  - Step 7  → JWT generation
+  - Step 8  → JWT validation filter
+  - Step 9  → Protect recipe endpoints
+  - Step 10 → Verify the whole flow

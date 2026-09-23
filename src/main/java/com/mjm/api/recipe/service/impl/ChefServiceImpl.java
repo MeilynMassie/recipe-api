@@ -65,4 +65,9 @@ public class ChefServiceImpl implements ChefService {
 
         chefRepository.save(chef);
     }
+
+    @Override
+    public Chef getChefByLogin(String login) {
+        return chefRepository.findByEmailOrUsernameIgnoreCase(login, login).orElseThrow(() -> new ResourceNotFoundException("Chef", login));
+    }
 }

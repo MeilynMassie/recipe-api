@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -27,9 +28,11 @@ import jakarta.validation.Valid;
 public class ChefController {
 
     private final ChefService chefService;
+    private final PasswordEncoder passwordEncoder;
 
-    public ChefController(ChefService chefService) {
+    public ChefController(ChefService chefService, PasswordEncoder passwordEncoder) {
         this.chefService = chefService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -50,6 +53,7 @@ public class ChefController {
 
     @PostMapping
     public ResponseEntity<Void> createChef(@Valid @RequestBody Chef chef) {
+        chef.setPassword(passwordEncoder.encode(chef.getPassword()));
         chefService.createChef(chef);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
