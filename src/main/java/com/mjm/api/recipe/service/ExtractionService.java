@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mjm.api.recipe.dto.RecipeUrlRequest;
 import com.mjm.api.recipe.dto.Extraction.RecipeExtraction;
+import com.mjm.api.recipe.dto.Extraction.RecipeUrlRequest;
 
 public interface ExtractionService {
 
